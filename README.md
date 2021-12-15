@@ -25,3 +25,7 @@ screenshot of fifth project:
 <hr>
 screenshot of sixth project:
 <img src="img/6.png">
+
+<hr>
+screenshot of seventh project:
+<img src="img/7.png">
