@@ -34,6 +34,7 @@ function addItem(e) {
 e.preventDefault();
 //  default behaviour is to add items to the server but we want to prevent that 
   const value = grocery.value;
+  // here grocery.value= objectname.propertyname
   // value property in javascript Specifies the value of the attribute
   // grocery is my input
   const id = new Date().getTime().toString();
@@ -54,6 +55,7 @@ e.preventDefault();
     let attr = document.createAttribute("data-id");
     // data-* attribute and its corresponding DOM dataset.property modify their shared name according 
     // data-* attribute gives us the ability to embed custom data attributes 
+    // createAttribute() method creates an attribute with the specified name, and returns the attribute as an Attr object
     attr.value = id;
     element.setAttributeNode(attr);
     // setAttributeNode() method adds the specified attribute node to an element
@@ -90,7 +92,7 @@ e.preventDefault();
     // localStorage object allows you to save key/value pairs in the browser
     // set back to default
     setBackToDefault();
-  } else if (value !== "" && editFlag) {
+  } else if (value && editFlag) {
     // it means if value is not empty and editflag is true(means i am editing)
     // we can also write it as:
     // if (value !== "" && editFlag=true) 
@@ -98,13 +100,16 @@ e.preventDefault();
     // if (value && editFlag)
 
     editElement.innerHTML = value;
-    displayAlert("value changed", "success");
+    displayAlert("value is changed", "success");
+    // Setting the value of innerHTML lets you easily replace the existing contents of an element with new content
+    // for more info of innerHTML:
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML 
 
     // edit  local storage
     editLocalStorage(editID, value);
     setBackToDefault();
   } else {
-    displayAlert("you, please enter", "danger");
+    displayAlert("please enter", "danger");
   }
 }
 
@@ -189,16 +194,22 @@ function setBackToDefault() {
 // list of functions to add items to local storage
 
 function addToLocalStorage(id, value) {
+// localStorage opject allows you to save key/value pairs in the browser
   const grocery = { id, value };
   let items = getLocalStorage();
   items.push(grocery);
+  // push() method adds new items to the end of an array
   localStorage.setItem("list", JSON.stringify(items));
+  // setItem() method sets the value of the specified Storage Object item
+  // setItem() method belongs to the Storage Object, which can be either a localStorage object or a sessionStorage object
 }
 
 function getLocalStorage() {
-  return localStorage.getItem("list")
-    ? JSON.parse(localStorage.getItem("list"))
-    : [];
+  return localStorage.getItem("list")?JSON.parse(localStorage.getItem("list")):[];
+  // means if there is an item with name of list then get that item otherwise return empty
+  // getItem() method of the Storage interface, when passed a key name, will return that key's
+  // value, or null if the key does not exist, in the given Storage object.  
+  // Use the JavaScript function JSON.parse() to convert text into a JavaScript object   
 }
 
 function removeFromLocalStorage(id) {
@@ -206,14 +217,19 @@ function removeFromLocalStorage(id) {
 
   items = items.filter(function (item) {
     if (item.id !== id) {
+    // it means if item.id that we are getting from local storage does not match with the id we entered 
       return item;
     }
   });
-
+  
   localStorage.setItem("list", JSON.stringify(items));
+  // JSON.stringify() method converts a JavaScript object or value into string
+  // JSON is purely a string with a specified data format — it contains only properties, no methods. JSON requires double quotes to be used around strings and property names
 }
+// so here we have access to the id and items from local storage, then we run filter
+// then we set new items and we send it to our local storage 
 
-function editLocalStorage(id, value) {
+function editLocalStorage(id, value) { 
   let items = getLocalStorage();
 
   items = items.map(function (item) {
