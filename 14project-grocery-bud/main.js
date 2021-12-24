@@ -57,6 +57,8 @@ e.preventDefault();
     // data-* attribute gives us the ability to embed custom data attributes 
     // createAttribute() method creates an attribute with the specified name, and returns the attribute as an Attr object
     attr.value = id;
+    // did not get this
+    // don't know the meaning of it
     element.setAttributeNode(attr);
     // setAttributeNode() method adds the specified attribute node to an element
     element.classList.add("grocery-item");
@@ -109,7 +111,7 @@ e.preventDefault();
     editLocalStorage(editID, value);
     setBackToDefault();
   } else {
-    displayAlert("please enter", "danger");
+    displayAlert("you have not enter anything", "danger");
   }
 }
 
@@ -155,7 +157,7 @@ function deleteItem(e) {
   if (list.children.length === 0) {
     container.classList.remove("show-container");
   }
-  displayAlert("you, removed the item", "danger");
+  displayAlert("you removed the item", "danger");
   
   setBackToDefault();
   // remove from local storage
@@ -167,10 +169,11 @@ function deleteItem(e) {
 
 function editItem(e) {
   const element = e.currentTarget.parentElement.parentElement;
+  // did not get this
   // set edit item
   editElement = e.currentTarget.parentElement.previousElementSibling;
-// previousElementSibling property returns the previous element of the specified element, in the
-// same tree level.
+  // did not get this
+// previousElementSibling property returns the previous element of the specified element, in the same tree level.
 
   // set form value
   grocery.value = editElement.innerHTML;
